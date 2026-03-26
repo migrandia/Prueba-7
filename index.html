@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda | Wedding Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Playfair+Display:ital,wght@0,400;1,700&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #3d4a3e; /* Verde Bosque Profundo */
+            --gold: #bc9c6c;
+            --bg-texture: #fdfbf7;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #f0eee6;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .wrapper {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: var(--bg-texture);
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            box-shadow: 0 0 40px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        /* HERO - FOTO DE FRENTE ABRAZADOS */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* REEMPLAZAR: Foto de los novios abrazados de frente */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(61, 74, 62, 0.8)), 
+                        url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1000');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        .hero-text {
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .hero-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 400;
+            letter-spacing: -1px;
+        }
+
+        .hero-text p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        /* SECCIONES CON ACUARELA */
+        section {
+            padding: 80px 30px;
+            text-align: center;
+            position: relative;
+            background-image: url('https://www.transparenttextures.com/patterns/white-watercolor.png');
+        }
+
+        .floral-top {
+            width: 120px;
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .story-section {
+            background: #fdfbf7;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .story-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .story-content {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            padding: 0 10px;
+        }
+
+        /* TARJETAS DE INFORMACIÓN */
+        .info-card {
+            background: white;
+            border: 1px solid #e8e4d8;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .info-card::before {
+            content: "";
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid var(--gold);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        /* MUSICA FLOAT */
+        #music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: none;
+        }
+
+        .audio-icon {
+            color: white;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <button id="music-btn" onclick="toggleMusic()">
+        <span class="audio-icon">♫</span>
+    </button>
+    <audio id="wedding-song" loop>
+        <source src="https://drive.google.com/file/d/1gllCs_V2LXOL5LDhRRIRWeuZv68TEK5R/view?usp=sharing" type="audio/mpeg">
+    </audio>
+
+    <div class="wrapper">
+        
+        <div class="hero">
+            <div class="hero-img"></div>
+            <div class="hero-text">
+                <p>Nuestra Boda</p>
+                <h1>Ana & Carlos</h1>
+                <div style="height: 1px; width: 60px; background: var(--gold); margin: 25px auto;"></div>
+                <p style="font-size: 1rem; letter-spacing: 3px;">14 DE FEBRERO 2026</p>
+            </div>
+        </div>
+
+        <section class="story-section">
+            <img src="https://cdn-icons-png.flaticon.com/512/10433/10433053.png" class="floral-top">
+            <h2 class="story-title">Nuestra Historia</h2>
+            <p class="story-content">
+                Dos caminos que se cruzaron para nunca más separarse. <br>
+                Lo que empezó como una simple amistad, floreció en el amor más profundo y honesto que hemos conocido. 
+                Hoy, bajo la mirada de quienes más amamos, prometemos cuidarnos y elegirnos cada día de nuestra vida.
+            </p>
+            <img src="https://images.unsplash.com/photo-1519225495806-71cd75bc8282?q=80&w=600" style="width: 100%; height: 300px; object-fit: cover; border-radius: 80px 0 80px 0; margin-top: 20px;">
+        </section>
+
+        <section style="background-color: #f7f6f2;">
+            <div class="info-card">
+                <h3>La Ceremonia</h3>
+                <p><strong>18:00 HRS</strong></p>
+                <p>Catedral Metropolitana de Yucatán<br>Tunkás, México</p>
+                <a href="#" class="btn-action">Ver Ubicación</a>
+            </div>
+
+            <div class="info-card">
+                <h3>La Recepción</h3>
+                <p><strong>20:30 HRS</strong></p>
+                <p>Hacienda Los Olivos<br>Salón Imperial</p>
+                <a href="#" class="btn-action">Cómo Llegar</a>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="story-title" style="font-size: 1.8rem;">¿Nos Acompañas?</h2>
+            <p>Tu presencia haría nuestro día aún más especial.</p>
+            <p style="font-size: 0.8rem; color: var(--gold); margin-bottom: 30px;">FAVOR DE CONFIRMAR ANTES DEL 15 DE ENERO</p>
+            
+            <a href="https://wa.me/521234567890" class="btn-action" style="background: var(--gold); border: none;">Confirmar Asistencia</a>
+            
+            <br><br><br>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--primary);">
+                "Lo mejor de nuestras vidas está por comenzar"
+            </p>
+        </section>
+
+    </div>
+
+    <script>
+        var music = document.getElementById("wedding-song");
+        var btn = document.getElementById("music-btn");
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                btn.style.background = "#3d4a3e";
+            } else {
+                music.pause();
+                btn.style.background = "#bc9c6c";
+            }
+        }
+    </script>
+</body>
+</html>
