@@ -3,257 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Boda | Wedding Invitation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Playfair+Display:ital,wght@0,400;1,700&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+    <title>Nuestra Boda - Invitación Especial</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Mrs+Saint+Delafield&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary: #3d4a3e; /* Verde Bosque Profundo */
-            --gold: #bc9c6c;
-            --bg-texture: #fdfbf7;
+            --dorado-suave: #aa9a6e;
+            --carbon: #2d2d2d;
+            --crema: #fdfbf7;
+            --blanco: #ffffff;
         }
 
-        body, html {
+        body {
             margin: 0;
             padding: 0;
-            background-color: #f0eee6;
             font-family: 'Montserrat', sans-serif;
-            scroll-behavior: smooth;
+            background-color: var(--crema);
+            color: var(--carbon);
+            text-align: center;
+            overflow-x: hidden;
         }
 
-        /* CONTENEDOR PRINCIPAL */
-        .wrapper {
-            max-width: 480px;
-            margin: 0 auto;
-            background-color: var(--bg-texture);
-            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-            box-shadow: 0 0 40px rgba(0,0,0,0.15);
-            position: relative;
-        }
-
-        /* HERO - FOTO DE FRENTE ABRAZADOS */
+        /* --- HEADER / PORTADA --- */
         .hero {
             height: 100vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .hero-img {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            /* REEMPLAZAR: Foto de los novios abrazados de frente */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(61, 74, 62, 0.8)), 
-                        url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1000');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-        }
-
-        .hero-text {
-            z-index: 2;
-            text-align: center;
-            color: white;
-            padding: 20px;
-        }
-
-        .hero-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            margin: 0;
-            font-weight: 400;
-            letter-spacing: -1px;
-        }
-
-        .hero-text p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            font-style: italic;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
-        /* SECCIONES CON ACUARELA */
-        section {
-            padding: 80px 30px;
-            text-align: center;
-            position: relative;
-            background-image: url('https://www.transparenttextures.com/patterns/white-watercolor.png');
-        }
-
-        .floral-top {
-            width: 120px;
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
-
-        .story-section {
-            background: #fdfbf7;
+            background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), 
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 8px solid var(--dorado-suave);
         }
 
-        .story-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--primary);
+        .hero h1 {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: clamp(80px, 15vw, 150px);
+            color: var(--dorado-suave);
+            margin: 0;
+            line-height: 0.8;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero p {
+            font-family: 'Gilda Display', serif;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        /* --- SECCIÓN DETALLES --- */
+        .section {
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .frase {
+            font-family: 'Gilda Display', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .divisor {
+            width: 50px;
+            height: 2px;
+            background: var(--dorado-suave);
+            margin: 30px auto;
+        }
+
+        /* --- CUENTA REGRESIVA --- */
+        .contador-container {
+            background: var(--blanco);
+            padding: 40px;
+            border: 1px solid #eee;
+            margin: 40px 0;
+        }
+
+        .fecha-boda {
+            font-family: 'Gilda Display', serif;
+            font-size: 2rem;
+            color: var(--dorado-suave);
             margin-bottom: 10px;
         }
 
-        .story-content {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #555;
-            padding: 0 10px;
+        /* --- BOTÓN DE CONFIRMACIÓN (REEMPLAZA CUESTIONARIO) --- */
+        .confirmacion-box {
+            background: var(--carbon);
+            color: var(--blanco);
+            padding: 60px 20px;
+            margin-top: 50px;
         }
 
-        /* TARJETAS DE INFORMACIÓN */
-        .info-card {
-            background: white;
-            border: 1px solid #e8e4d8;
-            padding: 40px 20px;
-            margin-bottom: 30px;
-            border-radius: 2px;
-            position: relative;
-        }
-
-        .info-card::before {
-            content: "";
-            position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid var(--gold);
-            opacity: 0.2;
-            pointer-events: none;
-        }
-
-        h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin-top: 0;
-        }
-
-        .btn-action {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 40px;
-            text-decoration: none;
-            font-size: 0.7rem;
+        .confirmacion-box h2 {
+            font-family: 'Gilda Display', serif;
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-top: 20px;
-            transition: all 0.3s;
         }
 
-        /* MUSICA FLOAT */
-        #music-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: none;
-        }
-
-        .audio-icon {
+        .btn-confirmar {
+            display: inline-block;
+            background-color: var(--dorado-suave);
             color: white;
-            font-size: 20px;
+            padding: 18px 45px;
+            text-decoration: none;
+            font-family: 'Gilda Display', serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            border: 1px solid transparent;
         }
 
+        .btn-confirmar:hover {
+            background-color: transparent;
+            border-color: var(--dorado-suave);
+            color: var(--dorado-suave);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 80px; }
+            .section { padding: 50px 25px; }
+            .frase { font-size: 1.2rem; }
+        }
     </style>
 </head>
 <body>
 
-    <button id="music-btn" onclick="toggleMusic()">
-        <span class="audio-icon">♫</span>
-    </button>
-    <audio id="wedding-song" loop>
-        <source src="https://drive.google.com/file/d/1gllCs_V2LXOL5LDhRRIRWeuZv68TEK5R/view?usp=sharing" type="audio/mpeg">
-    </audio>
+    <header class="hero">
+        <p>Estás Invitado a la Boda de</p>
+        <h1>Juan & María</h1>
+        <div class="divisor"></div>
+        <p>Tunkás, Yucatán</p>
+    </header>
 
-    <div class="wrapper">
-        
-        <div class="hero">
-            <div class="hero-img"></div>
-            <div class="hero-text">
-                <p>Nuestra Boda</p>
-                <h1>Ana & Carlos</h1>
-                <div style="height: 1px; width: 60px; background: var(--gold); margin: 25px auto;"></div>
-                <p style="font-size: 1rem; letter-spacing: 3px;">14 DE FEBRERO 2026</p>
-            </div>
+    <section class="section">
+        <div class="frase">
+            "El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección."
         </div>
+        
+        <div class="contador-container">
+            <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Nos casamos el</p>
+            <div class="fecha-boda">Sábado, 24 de Octubre</div>
+            <p>2026 • 18:00 HRS</p>
+        </div>
+    </section>
 
-        <section class="story-section">
-            <img src="https://cdn-icons-png.flaticon.com/512/10433/10433053.png" class="floral-top">
-            <h2 class="story-title">Nuestra Historia</h2>
-            <p class="story-content">
-                Dos caminos que se cruzaron para nunca más separarse. <br>
-                Lo que empezó como una simple amistad, floreció en el amor más profundo y honesto que hemos conocido. 
-                Hoy, bajo la mirada de quienes más amamos, prometemos cuidarnos y elegirnos cada día de nuestra vida.
-            </p>
-            <img src="https://images.unsplash.com/photo-1519225495806-71cd75bc8282?q=80&w=600" style="width: 100%; height: 300px; object-fit: cover; border-radius: 80px 0 80px 0; margin-top: 20px;">
-        </section>
+    <section class="section" style="background: #fff; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+        <h3 style="font-family: 'Gilda Display'; color: var(--dorado-suave);">CEREMONIA Y RECEPCIÓN</h3>
+        <p>Hacienda San José, Tunkás</p>
+        <div class="divisor"></div>
+        <a href="https://maps.app.goo.gl/link-de-ejemplo" target="_blank" style="color: var(--carbon); text-decoration: underline; font-size: 0.9rem;">VER UBICACIÓN EN MAPS</a>
+    </section>
 
-        <section style="background-color: #f7f6f2;">
-            <div class="info-card">
-                <h3>La Ceremonia</h3>
-                <p><strong>18:00 HRS</strong></p>
-                <p>Catedral Metropolitana de Yucatán<br>Tunkás, México</p>
-                <a href="#" class="btn-action">Ver Ubicación</a>
-            </div>
+    <section class="confirmacion-box">
+        <h2>¿Nos acompañas?</h2>
+        <p>Por favor, confirma tu asistencia antes del 10 de Septiembre.</p>
+        
+        <a href="https://wa.me/5219991234567?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Juan%20y%20María" class="btn-confirmar">
+            CONFIRMAR ASISTENCIA
+        </a>
+    </section>
 
-            <div class="info-card">
-                <h3>La Recepción</h3>
-                <p><strong>20:30 HRS</strong></p>
-                <p>Hacienda Los Olivos<br>Salón Imperial</p>
-                <a href="#" class="btn-action">Cómo Llegar</a>
-            </div>
-        </section>
+    <footer style="padding: 40px; font-size: 0.7rem; color: #999;">
+        DERECHOS RESERVADOS • 2026
+    </footer>
 
-        <section>
-            <h2 class="story-title" style="font-size: 1.8rem;">¿Nos Acompañas?</h2>
-            <p>Tu presencia haría nuestro día aún más especial.</p>
-            <p style="font-size: 0.8rem; color: var(--gold); margin-bottom: 30px;">FAVOR DE CONFIRMAR ANTES DEL 15 DE ENERO</p>
-            
-            <a href="https://wa.me/521234567890" class="btn-action" style="background: var(--gold); border: none;">Confirmar Asistencia</a>
-            
-            <br><br><br>
-            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--primary);">
-                "Lo mejor de nuestras vidas está por comenzar"
-            </p>
-        </section>
-
-    </div>
-
-    <script>
-        var music = document.getElementById("wedding-song");
-        var btn = document.getElementById("music-btn");
-
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                btn.style.background = "#3d4a3e";
-            } else {
-                music.pause();
-                btn.style.background = "#bc9c6c";
-            }
-        }
-    </script>
 </body>
 </html>
