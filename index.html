@@ -3,176 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Boda - Invitación Especial</title>
+    <title>Boda Real - Invitación Digital</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Mrs+Saint+Delafield&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Mrs+Saint+Delafield&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --dorado-suave: #aa9a6e;
-            --carbon: #2d2d2d;
+            --oro: #aa9a6e;
+            --carbon: #1a1a1a;
             --crema: #fdfbf7;
-            --blanco: #ffffff;
+            --gris-suave: #f4f4f4;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Montserrat', sans-serif;
+            margin: 0; padding: 0;
             background-color: var(--crema);
             color: var(--carbon);
             text-align: center;
-            overflow-x: hidden;
         }
 
-        /* --- HEADER / PORTADA --- */
-        .hero {
+        /* --- SECCIÓN 1: HOME BANNER --- */
+        .home-banner {
             height: 100vh;
-            background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), 
-                        url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
+                        url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop') center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-bottom: 8px solid var(--dorado-suave);
+            color: white;
         }
 
-        .hero h1 {
+        .home-banner h1 {
             font-family: 'Mrs Saint Delafield', cursive;
-            font-size: clamp(80px, 15vw, 150px);
-            color: var(--dorado-suave);
+            font-size: clamp(70px, 15vw, 120px);
             margin: 0;
-            line-height: 0.8;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .hero p {
+        .home-banner p {
             font-family: 'Gilda Display', serif;
             letter-spacing: 5px;
             text-transform: uppercase;
-            font-size: 1.2rem;
-            margin-top: 20px;
         }
 
-        /* --- SECCIÓN DETALLES --- */
-        .section {
+        /* --- SECCIÓN 2: FRASE Y PADRES --- */
+        .alegria {
             padding: 80px 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            background: white;
         }
 
         .frase {
             font-family: 'Gilda Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-style: italic;
-            margin-bottom: 50px;
-            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 50px;
         }
 
-        .divisor {
-            width: 50px;
-            height: 2px;
-            background: var(--dorado-suave);
-            margin: 30px auto;
+        .padres-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        /* --- CUENTA REGRESIVA --- */
-        .contador-container {
-            background: var(--blanco);
-            padding: 40px;
-            border: 1px solid #eee;
-            margin: 40px 0;
-        }
-
-        .fecha-boda {
+        .padres-col h3 {
+            color: var(--oro);
             font-family: 'Gilda Display', serif;
-            font-size: 2rem;
-            color: var(--dorado-suave);
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
         }
 
-        /* --- BOTÓN DE CONFIRMACIÓN (REEMPLAZA CUESTIONARIO) --- */
-        .confirmacion-box {
+        /* --- SECCIÓN 3: CUANDO Y DONDE (CONTADOR) --- */
+        .cuando-donde {
+            background: var(--gris-suave);
+            padding: 80px 20px;
+        }
+
+        .contador {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .tiempo-item {
+            background: white;
+            padding: 15px;
+            min-width: 70px;
+            border-radius: 50%;
+            border: 1px solid var(--oro);
+        }
+
+        .tiempo-item span { font-size: 1.5rem; font-weight: bold; display: block; }
+        .tiempo-item label { font-size: 0.6rem; text-transform: uppercase; }
+
+        /* --- SECCIÓN 4: TIMELINE (ITINERARIO) --- */
+        .timeline {
+            padding: 80px 20px;
+        }
+
+        .timeline-item {
+            border-left: 2px solid var(--oro);
+            margin: 0 auto 30px;
+            max-width: 400px;
+            padding-left: 30px;
+            position: relative;
+            text-align: left;
+        }
+
+        .timeline-item::before {
+            content: "";
+            width: 12px; height: 12px;
             background: var(--carbon);
-            color: var(--blanco);
-            padding: 60px 20px;
-            margin-top: 50px;
+            position: absolute;
+            left: -7px; top: 5px;
+            border-radius: 50%;
         }
 
-        .confirmacion-box h2 {
-            font-family: 'Gilda Display', serif;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+        .timeline-item h3 { font-family: 'Gilda Display', serif; color: var(--oro); margin: 0; }
+
+        /* --- SECCIÓN 5: DRESSCODE Y REGALOS --- */
+        .info-extra {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--carbon);
+            color: white;
+        }
+
+        .info-col { padding: 60px 20px; border: 0.5px solid #333; }
+        .info-col h2 { font-family: 'Gilda Display', serif; color: var(--oro); }
+
+        /* --- SECCIÓN 6: ASISTENCIA (EL BOTÓN) --- */
+        .asistencia {
+            padding: 100px 20px;
+            background: var(--crema);
         }
 
         .btn-confirmar {
-            display: inline-block;
-            background-color: var(--dorado-suave);
+            background: var(--oro);
             color: white;
-            padding: 18px 45px;
+            padding: 20px 50px;
             text-decoration: none;
-            font-family: 'Gilda Display', serif;
-            font-size: 1.1rem;
+            display: inline-block;
+            font-weight: bold;
             letter-spacing: 2px;
-            transition: all 0.3s ease;
+            border-radius: 5px;
             margin-top: 30px;
-            border: 1px solid transparent;
-        }
-
-        .btn-confirmar:hover {
-            background-color: transparent;
-            border-color: var(--dorado-suave);
-            color: var(--dorado-suave);
         }
 
         /* --- RESPONSIVE --- */
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 80px; }
-            .section { padding: 50px 25px; }
-            .frase { font-size: 1.2rem; }
+        @media (max-width: 768px) {
+            .padres-grid, .info-extra { grid-template-columns: 1fr; }
+            .home-banner h1 { font-size: 60px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero">
-        <p>Estás Invitado a la Boda de</p>
+    <section class="home-banner">
+        <p>Nuestra Boda</p>
         <h1>Juan & María</h1>
-        <div class="divisor"></div>
-        <p>Tunkás, Yucatán</p>
-    </header>
+        <p>24 . OCTUBRE . 2026</p>
+    </section>
 
-    <section class="section">
-        <div class="frase">
-            "El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección."
-        </div>
+    <section class="alegria">
+        <div class="frase">"Con la bendición de Dios y nuestros padres, unimos nuestras vidas."</div>
         
-        <div class="contador-container">
-            <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Nos casamos el</p>
-            <div class="fecha-boda">Sábado, 24 de Octubre</div>
-            <p>2026 • 18:00 HRS</p>
+        <div class="padres-grid">
+            <div class="padres-col">
+                <h3>PADRES DE LA NOVIA</h3>
+                <p>Sr. Pedro María<br>Sra. Rosa Pérez</p>
+            </div>
+            <div class="padres-col">
+                <h3>PADRES DEL NOVIO</h3>
+                <p>Sr. Juan Carlos<br>Sra. Elena Solís</p>
+            </div>
         </div>
     </section>
 
-    <section class="section" style="background: #fff; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-        <h3 style="font-family: 'Gilda Display'; color: var(--dorado-suave);">CEREMONIA Y RECEPCIÓN</h3>
-        <p>Hacienda San José, Tunkás</p>
-        <div class="divisor"></div>
-        <a href="https://maps.app.goo.gl/link-de-ejemplo" target="_blank" style="color: var(--carbon); text-decoration: underline; font-size: 0.9rem;">VER UBICACIÓN EN MAPS</a>
-    </section>
-
-    <section class="confirmacion-box">
-        <h2>¿Nos acompañas?</h2>
-        <p>Por favor, confirma tu asistencia antes del 10 de Septiembre.</p>
-        
-        <a href="https://wa.me/5219991234567?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Juan%20y%20María" class="btn-confirmar">
-            CONFIRMAR ASISTENCIA
-        </a>
-    </section>
-
-    <footer style="padding: 40px; font-size: 0.7rem; color: #999;">
-        DERECHOS RESERVADOS • 2026
-    </footer>
-
-</body>
-</html>
+    <section class="cuando-donde">
+        <h2 style="font-family: 'Gilda Display';">FALTAN SOLO...</h2>
+        <div class="contador">
+            <div class="tiempo-item"><span id="dias">00</span><label>Días</label></div>
+            <div class="tiempo-item"><span id="horas
