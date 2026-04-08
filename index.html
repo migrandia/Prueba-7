@@ -37,6 +37,11 @@
             position: relative;
         }
 
+        .foto-portada, h1, .header-album p, .contadores {
+            position: relative;
+            z-index: 2;
+        }
+
         .foto-portada {
             width: 150px; height: 150px;
             margin: 0 auto 15px;
@@ -45,7 +50,6 @@
             outline: 2px solid var(--oro);
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            position: relative; z-index: 2;
         }
         .foto-portada img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -56,25 +60,22 @@
             margin: 0; 
             cursor: pointer; 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.4); 
-            position: relative; z-index: 2;
         }
 
-        /* CONTADORES */
+        /* ESTILO DE CONTADORES */
         .contadores {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 10px;
-            position: relative;
-            z-index: 2;
         }
-        .contador-item {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .cont-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-size: 0.7rem;
             font-weight: bold;
-            color: var(--rosa-fuerte);
+            color: var(--texto);
             border: 1px solid var(--oro);
         }
 
@@ -84,6 +85,10 @@
             padding: 20px; margin: 20px auto;
             border-radius: 15px; border: 2px dashed var(--oro);
             max-width: 400px;
+        }
+        .btn-admin {
+            background: var(--oro); color: white; border: none;
+            padding: 10px; margin: 5px; border-radius: 8px; cursor: pointer; font-weight: bold;
         }
 
         .chat-container {
@@ -123,22 +128,45 @@
         .gallery-grid {
             display: grid; 
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px; padding: 10px; margin-bottom: 30px;
+            gap: 5px; padding: 10px; margin-bottom: 30px;
         }
-        .photo-item { aspect-ratio: 1/1; background: #eee; border-radius: 8px; overflow: hidden; position: relative; }
+        .photo-item { aspect-ratio: 1/1; background: #eee; border-radius: 5px; overflow: hidden; position: relative; }
         .photo-item img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
         .tag { 
             position: absolute; bottom: 0; width: 100%; 
             background: rgba(0,0,0,0.6); color: white; 
             font-size: 0.6rem; padding: 4px 0; font-weight: bold;
+            pointer-events: none;
         }
 
         .thanks-section {
             background: linear-gradient(rgba(254, 241, 248, 0.8), rgba(254, 241, 248, 0.8)), 
                         url('https://www.dropbox.com/scl/fi/clsf8su5ditx2r9y1ayk2/FONDO-DE-ALBUN-DE-XV-A-OS-2.jpg?rlkey=ibvipesihp806pa89vnph7322&raw=1');
-            background-size: cover; padding: 60px 20px; margin-top: 50px; border-top: 2px solid var(--oro);
+            background-size: cover;
+            background-position: center;
+            padding: 60px 20px;
+            margin-top: 50px;
+            border-top: 2px solid var(--oro);
         }
-        .footer-brand { font-size: 0.7rem; letter-spacing: 2px; opacity: 0.8; padding-bottom: 120px; }
+        .thanks-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--oro);
+            margin-bottom: 10px;
+        }
+        .thanks-subtext {
+            font-size: 0.9rem;
+            max-width: 300px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        .footer-brand {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            padding-bottom: 120px; 
+        }
+        .footer-brand a { color: var(--oro); text-decoration: none; font-weight: bold; }
 
         .float-btn { position: fixed; bottom: 25px; width: 100%; z-index: 1000; }
         .btn-upload {
@@ -155,16 +183,18 @@
             <img src="https://www.dropbox.com/scl/fi/nm44i882g13044o8idz6k/xv1.jpg?rlkey=wn8xf4ne3yp5fz4vkzpsvbz4p&raw=1">
         </div>
         <h1 onclick="detectarTripleClic()">Valentina</h1>
+        <p style="letter-spacing: 2px; font-size: 0.7rem; font-weight: bold; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">MURO DE RECUERDOS</p>
         
         <div class="contadores">
-            <div class="contador-item">📸 <span id="count-fotos">0</span> Fotos</div>
-            <div class="contador-item">✍️ <span id="count-deseos">0</span> Deseos</div>
+            <div class="cont-box">📸 <span id="c-fotos">0</span> FOTOS</div>
+            <div class="cont-box">✍️ <span id="c-deseos">0</span> DESEOS</div>
         </div>
     </div>
 
     <div id="admin-panel">
         <h3 style="margin-top:0;">Panel Administrativo</h3>
-        <button onclick="location.reload()" class="btn-enviar">🔄 Actualizar</button>
+        <button class="btn-admin" onclick="location.reload()">🔄 Actualizar</button>
+        <p style="font-size:10px; color:#ccc;">Usa el Excel para gestionar mensajes</p>
     </div>
 
     <div class="chat-container">
@@ -174,11 +204,13 @@
             <div class="dot" onclick="setCol('#cfefff')" style="background:#cfefff;"></div>
             <div class="dot" onclick="setCol('#d1ffcf')" style="background:#d1ffcf;"></div>
         </div>
+
         <div class="input-box" id="caja">
             <input type="text" id="n" placeholder="Tu nombre...">
             <textarea id="m" placeholder="Escribe algo aquí..."></textarea>
             <button class="btn-enviar" onclick="enviar()">ENVIAR MENSAJE</button>
         </div>
+
         <div id="muro-mensajes"></div>
     </div>
 
@@ -186,8 +218,11 @@
     <div class="gallery-grid" id="galeria"></div>
 
     <div class="thanks-section">
-        <p style="font-family:'Great Vibes'; font-size:2rem; color:var(--oro);">¡Gracias por venir!</p>
-        <div class="footer-brand">CREADO POR <a href="https://migrandia.mx" target="_blank" style="color:var(--oro); text-decoration:none;">MIGRANDIA.MX</a></div>
+        <p class="thanks-text">¡Gracias por venir!</p>
+        <p class="thanks-subtext">Mi fiesta no hubiera sido igual sin tu compañía. Gracias por festejar conmigo y guardar estos bellos recuerdos.</p>
+        <div class="footer-brand">
+            CREADO POR <a href="https://migrandia.mx" target="_blank">MIGRANDIA.MX</a>
+        </div>
     </div>
 
     <div class="float-btn">
@@ -203,6 +238,12 @@
         let clickCount = 0;
 
         function setCol(c) { col = c; document.getElementById('caja').style.backgroundColor = c; }
+
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false; 
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; 
+        };
 
         function detectarTripleClic() {
             clickCount++;
@@ -229,4 +270,64 @@
                 document.getElementById('m').value = "";
                 btn.innerText = "ENVIAR MENSAJE";
                 setTimeout(cargarChat, 2000); 
-            } catch (e) { alert("Error
+            } catch (e) { alert("Error al enviar"); btn.innerText = "ENVIAR MENSAJE"; }
+        }
+
+        async function cargarChat() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                document.getElementById('c-deseos').innerText = data.length;
+                const muro = document.getElementById('muro-mensajes');
+                muro.innerHTML = "";
+                data.reverse().forEach(d => {
+                    const s = document.createElement('div');
+                    s.className = "sticker";
+                    s.style.backgroundColor = d.Color || "#fff4ad";
+                    s.style.transform = `rotate(${Math.random()*6-3}deg)`;
+                    s.innerHTML = `<strong>${d.Nombre}:</strong><p>${d.Mensaje}</p>`;
+                    muro.appendChild(s);
+                });
+            } catch (e) { console.log("Cargando chat..."); }
+        }
+
+        async function cargarFotos() {
+            try {
+                const res = await fetch(`https://res.cloudinary.com/${cloudName}/image/list/${eventTag}.json?v=${Date.now()}`);
+                const data = await res.json();
+                document.getElementById('c-fotos').innerText = data.resources.length;
+                const gal = document.getElementById('galeria');
+                gal.innerHTML = "";
+                data.resources.forEach(img => {
+                    let uploader = img.context?.custom?.uploader || "Invitado";
+                    const urlThumb = `https://res.cloudinary.com/${cloudName}/image/upload/w_400,c_fill/${img.public_id}.${img.format}`;
+                    const urlFull = `https://res.cloudinary.com/${cloudName}/image/upload/${img.public_id}.${img.format}`;
+                    const div = document.createElement('div');
+                    div.className = 'photo-item';
+                    div.innerHTML = `<img src="${urlThumb}" onclick="window.open('${urlFull}')"><div class="tag">De: ${uploader}</div>`;
+                    gal.appendChild(div);
+                });
+            } catch (e) { console.log("Cargando fotos..."); }
+        }
+
+        const widget = cloudinary.createUploadWidget({
+            cloudName: cloudName, 
+            uploadPreset: uploadPreset, 
+            tags: [eventTag],
+            clientAllowedFormats: ["png", "jpg", "jpeg"],
+            prepareUploadParams: (cb, params) => {
+                const n = prompt("¿Tu nombre?") || "Invitado";
+                cb({ context: `uploader=${n}` });
+            }
+        }, (err, res) => { if(res.event === "success") setTimeout(cargarFotos, 2000); });
+
+        document.getElementById("upload_widget").onclick = () => widget.open();
+
+        window.onload = () => { 
+            cargarChat(); 
+            cargarFotos(); 
+            setInterval(cargarChat, 30000); 
+        };
+    </script>
+</body>
+</html>
