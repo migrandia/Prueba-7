@@ -14,8 +14,6 @@
             --rosa-fuerte: #ff007f;
             --texto: #5a4a42;
             --fondo-chat: #fdf2f5;
-            --gris-like: #ced4da;
-            --rosa-like: #ff4757;
         }
 
         body {
@@ -30,22 +28,6 @@
 
         input, textarea { user-select: text; -webkit-user-select: text; }
 
-        /* BARRA DE ESTADÍSTICAS SUPERIOR (NUEVA) */
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            background: white;
-            padding: 15px 5px;
-            margin: 10px 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            border: 1px solid var(--oro);
-        }
-        .stat-item { flex: 1; border-right: 1px solid #eee; }
-        .stat-item:last-child { border-right: none; }
-        .stat-num { display: block; font-weight: bold; font-size: 1.2rem; color: var(--rosa-fuerte); }
-        .stat-label { font-size: 0.6rem; text-transform: uppercase; color: #888; }
-
         .header-album {
             background-image: url('https://www.dropbox.com/scl/fi/clsf8su5ditx2r9y1ayk2/FONDO-DE-ALBUN-DE-XV-A-OS-2.jpg?rlkey=ibvipesihp806pa89vnph7322&raw=1');
             background-size: cover;
@@ -53,6 +35,11 @@
             padding: 50px 20px;
             border-bottom: 4px double var(--oro);
             position: relative;
+        }
+
+        .foto-portada, h1, .header-album p {
+            position: relative;
+            z-index: 2;
         }
 
         .foto-portada {
@@ -75,10 +62,36 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.4); 
         }
 
+        /* BARRA DE ESTADÍSTICAS AÑADIDA */
+        .stats-bar {
+            display: flex; justify-content: space-around;
+            background: white; padding: 10px; margin: 10px;
+            border-radius: 15px; border: 1px solid var(--oro);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .stat-item { flex: 1; }
+        .stat-num { display: block; font-weight: bold; color: var(--rosa-fuerte); }
+        .stat-label { font-size: 0.6rem; text-transform: uppercase; color: #999; }
+
+        #admin-panel {
+            display: none;
+            background: #5a4a42; color: white;
+            padding: 20px; margin: 20px auto;
+            border-radius: 15px; border: 2px dashed var(--oro);
+            max-width: 400px;
+        }
+        .btn-admin {
+            background: var(--oro); color: white; border: none;
+            padding: 10px; margin: 5px; border-radius: 8px; cursor: pointer; font-weight: bold;
+        }
+
         .chat-container {
             background: white; margin: 20px 10px; padding: 20px 10px;
             border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
+
+        .color-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .dot { width: 30px; height: 30px; border-radius: 5px; cursor: pointer; border: 2px solid #eee; }
 
         .input-box {
             background: #fff4ad; padding: 15px; border-radius: 15px;
@@ -94,41 +107,68 @@
             padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer;
         }
 
+        #muro-mensajes {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 15px; margin-top: 25px; max-height: 400px; overflow-y: auto; padding: 10px;
+        }
+
         .sticker {
             width: 130px; min-height: 130px; padding: 12px;
             text-align: left; box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
             font-size: 0.8rem; position: relative; color: #333;
         }
 
-        /* GALERÍA EN 2 COLUMNAS (CAMBIO AQUÍ) */
+        /* GALERÍA CAMBIADA A 2 COLUMNAS */
         .gallery-grid {
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 12px; padding: 10px; margin-bottom: 30px;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 10px; padding: 10px; margin-bottom: 30px;
         }
-        .photo-card {
-            background: white; border-radius: 10px; overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .photo-item { aspect-ratio: 1/1; background: #eee; overflow: hidden; position: relative; }
-        .photo-item img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* FOOTER DE LA FOTO (NOMBRE Y LIKES) */
-        .photo-footer {
+        .photo-item { aspect-ratio: 1/1; background: #eee; border-radius: 5px; overflow: hidden; position: relative; }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+        
+        /* FOOTER DE LIKES PARA CADA FOTO */
+        .photo-info {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 8px; background: white;
+            padding: 5px; background: white; border-radius: 0 0 5px 5px;
         }
-        .uploader-name { font-size: 0.6rem; font-weight: bold; color: var(--texto); text-align: left; }
-        .like-box { display: flex; align-items: center; gap: 3px; cursor: pointer; }
-        .heart-icon { font-size: 1.1rem; color: var(--gris-like); transition: 0.3s; }
-        .heart-icon.active { color: var(--rosa-like); }
-        .like-count { font-size: 0.75rem; font-weight: bold; }
+        .like-btn { cursor: pointer; color: #ccc; font-size: 1.2rem; display: flex; align-items: center; gap: 4px; }
+        .like-btn.active { color: var(--rosa-fuerte); }
+        .like-count { font-size: 0.8rem; color: var(--texto); font-weight: bold; }
+
+        .tag { 
+            position: absolute; top: 0; width: 100%; 
+            background: rgba(0,0,0,0.4); color: white; 
+            font-size: 0.6rem; padding: 2px 0;
+        }
 
         .thanks-section {
             background: linear-gradient(rgba(254, 241, 248, 0.8), rgba(254, 241, 248, 0.8)), 
                         url('https://www.dropbox.com/scl/fi/clsf8su5ditx2r9y1ayk2/FONDO-DE-ALBUN-DE-XV-A-OS-2.jpg?rlkey=ibvipesihp806pa89vnph7322&raw=1');
-            background-size: cover; padding: 60px 20px; margin-top: 50px; border-top: 2px solid var(--oro);
+            background-size: cover;
+            background-position: center;
+            padding: 60px 20px;
+            margin-top: 50px;
+            border-top: 2px solid var(--oro);
         }
+        .thanks-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--oro);
+            margin-bottom: 10px;
+        }
+        .thanks-subtext {
+            font-size: 0.9rem;
+            max-width: 300px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        .footer-brand {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            padding-bottom: 120px;
+        }
+        .footer-brand a { color: var(--oro); text-decoration: none; font-weight: bold; }
 
         .float-btn { position: fixed; bottom: 25px; width: 100%; z-index: 1000; }
         .btn-upload {
@@ -140,43 +180,48 @@
 </head>
 <body oncontextmenu="return false;">
 
-    <div class="stats-bar">
-        <div class="stat-item">
-            <span class="stat-num" id="stat-fotos">0</span>
-            <span class="stat-label">Fotos</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-num" id="stat-likes">0</span>
-            <span class="stat-label">Likes</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-num" id="stat-mensajes">0</span>
-            <span class="stat-label">Deseos</span>
-        </div>
-    </div>
-
     <div class="header-album">
         <div class="foto-portada">
             <img src="https://www.dropbox.com/scl/fi/nm44i882g13044o8idz6k/xv1.jpg?rlkey=wn8xf4ne3yp5fz4vkzpsvbz4p&raw=1">
         </div>
-        <h1>Valentina</h1>
+        <h1 onclick="detectarTripleClic()">Valentina</h1>
         <p style="letter-spacing: 2px; font-size: 0.7rem; font-weight: bold; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">MURO DE RECUERDOS</p>
     </div>
 
+    <div class="stats-bar">
+        <div class="stat-item"><span class="stat-num" id="count-fotos">0</span><span class="stat-label">Fotos</span></div>
+        <div class="stat-item"><span class="stat-num" id="count-likes">0</span><span class="stat-label">Likes</span></div>
+        <div class="stat-item"><span class="stat-num" id="count-msgs">0</span><span class="stat-label">Deseos</span></div>
+    </div>
+
+    <div id="admin-panel">
+        <h3 style="margin-top:0;">Panel Administrativo</h3>
+        <button class="btn-admin" onclick="location.reload()">🔄 Actualizar</button>
+    </div>
+
     <div class="chat-container">
+        <div class="color-selector">
+            <div class="dot" onclick="setCol('#fff4ad')" style="background:#fff4ad;"></div>
+            <div class="dot" onclick="setCol('#ffcfdf')" style="background:#ffcfdf;"></div>
+            <div class="dot" onclick="setCol('#cfefff')" style="background:#cfefff;"></div>
+            <div class="dot" onclick="setCol('#d1ffcf')" style="background:#d1ffcf;"></div>
+        </div>
+
         <div class="input-box" id="caja">
             <input type="text" id="n" placeholder="Tu nombre...">
             <textarea id="m" placeholder="Escribe algo aquí..."></textarea>
             <button class="btn-enviar" onclick="enviar()">ENVIAR MENSAJE</button>
         </div>
+
         <div id="muro-mensajes"></div>
     </div>
 
-    <h2 style="font-family: 'Great Vibes'; font-size: 2.5rem; color: var(--oro);">Galería en Vivo</h2>
+    <h2 style="font-family: 'Great Vibes'; font-size: 2.5rem;">Galería en Vivo</h2>
     <div class="gallery-grid" id="galeria"></div>
 
     <div class="thanks-section">
         <p class="thanks-text">¡Gracias por venir!</p>
+        <p class="thanks-subtext">Mi fiesta no hubiera sido igual sin tu compañía. Gracias por festejar conmigo y guardar estos bellos recuerdos.</p>
         <div class="footer-brand">
             CREADO POR <a href="https://migrandia.mx" target="_blank">MIGRANDIA.MX</a>
         </div>
@@ -187,114 +232,120 @@
     </div>
 
     <script>
-        // REEMPLAZA ESTO CON TU URL DE GOOGLE SCRIPT (LA NUEVA)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR3VsX40qx8CIl-lNZyJP88FpKoTgwvPVLVGVvnApxHsS3E16pDcI-Gz3rOaM_zeQ/exec";
         const cloudName = "dkoaxjahe";
+        const uploadPreset = "ALBUN TEST";
         const eventTag = "cumple_valentina_6";
-        let likesData = {};
+        let col = "#fff4ad";
+        let clickCount = 0;
 
-        async function cargarTodo() {
-            try {
-                // 1. Obtener Estadísticas y Likes de Google
-                const res = await fetch(SCRIPT_URL);
-                const data = await res.json();
-                
-                document.getElementById('stat-mensajes').innerText = data.totalMensajes || 0;
-                document.getElementById('stat-likes').innerText = data.totalLikes || 0;
-                
-                likesData = {};
-                if(data.detalleLikes) {
-                    data.detalleLikes.forEach(f => { likesData[f[0]] = f[1]; });
-                }
+        function setCol(c) { col = c; document.getElementById('caja').style.backgroundColor = c; }
 
-                // 2. Cargar Fotos de Cloudinary
-                const resF = await fetch(`https://res.cloudinary.com/${cloudName}/image/list/${eventTag}.json?v=${Date.now()}`);
-                const dataF = await resF.json();
-                document.getElementById('stat-fotos').innerText = dataF.resources.length;
-
-                const gal = document.getElementById('galeria');
-                gal.innerHTML = "";
-                dataF.resources.forEach(img => {
-                    const id = img.public_id;
-                    const lks = likesData[id] || 0;
-                    const uploader = img.context?.custom?.uploader || "Invitado";
-                    const urlT = `https://res.cloudinary.com/${cloudName}/image/upload/w_500,c_fill/${id}.${img.format}`;
-                    
-                    const card = document.createElement('div');
-                    card.className = 'photo-card';
-                    card.innerHTML = `
-                        <div class="photo-item">
-                            <img src="${urlT}" onclick="window.open('https://res.cloudinary.com/${cloudName}/image/upload/${id}.${img.format}')">
-                        </div>
-                        <div class="photo-footer">
-                            <div class="uploader-name">De: ${uploader}</div>
-                            <div class="like-box" onclick="darLike('${id}', this)">
-                                <span class="heart-icon ${lks > 0 ? 'active' : ''}">❤</span>
-                                <span class="like-count">${lks}</span>
-                            </div>
-                        </div>
-                    `;
-                    gal.appendChild(card);
-                });
-                
-                // Cargar stickers del chat
-                const muro = document.getElementById('muro-mensajes');
-                muro.innerHTML = "";
-                data.mensajes.reverse().forEach(d => {
-                    const s = document.createElement('div');
-                    s.className = "sticker";
-                    s.style.backgroundColor = d.Color || "#fff4ad";
-                    s.style.transform = `rotate(${Math.random()*6-3}deg)`;
-                    s.innerHTML = `<strong>${d.Nombre}:</strong><p>${d.Mensaje}</p>`;
-                    muro.appendChild(s);
-                });
-
-            } catch (e) { console.log("Cargando..."); }
-        }
-
-        async function darLike(id, el) {
-            const cor = el.querySelector('.heart-icon');
-            const cnt = el.querySelector('.like-count');
-            
-            cor.classList.add('active');
-            cnt.innerText = parseInt(cnt.innerText) + 1;
-            
-            // Actualizar barra arriba
-            const bar = document.getElementById('stat-likes');
-            bar.innerText = parseInt(bar.innerText) + 1;
-
-            fetch(`${SCRIPT_URL}?accion=darLike&idFoto=${id}`, { method: 'POST', mode: 'no-cors' });
+        function detectarTripleClic() {
+            clickCount++;
+            if (clickCount === 3) {
+                const p = document.getElementById('admin-panel');
+                p.style.display = (p.style.display === 'block') ? 'none' : 'block';
+                clickCount = 0;
+            }
+            setTimeout(() => { clickCount = 0; }, 1000);
         }
 
         async function enviar() {
             const nom = document.getElementById('n').value;
             const msg = document.getElementById('m').value;
             if(!nom || !msg) return alert("Faltan datos");
-            
             const btn = document.querySelector('.btn-enviar');
             btn.innerText = "Enviando...";
             const data = new URLSearchParams();
             data.append('Nombre', nom);
             data.append('Mensaje', msg);
-            data.append('Color', "#fff4ad");
-
-            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
-            document.getElementById('m').value = "";
-            btn.innerText = "ENVIAR MENSAJE";
-            setTimeout(cargarTodo, 2000);
+            data.append('Color', col);
+            try {
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
+                document.getElementById('m').value = "";
+                btn.innerText = "ENVIAR MENSAJE";
+                setTimeout(cargarChat, 2000); 
+            } catch (e) { alert("Error al enviar"); btn.innerText = "ENVIAR MENSAJE"; }
         }
 
-        window.onload = cargarTodo;
+        async function cargarChat() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                // Si el JSON viene con la estructura nueva de estadísticas:
+                if(data.totalMensajes !== undefined) {
+                    document.getElementById('count-msgs').innerText = data.totalMensajes;
+                    document.getElementById('count-likes').innerText = data.totalLikes;
+                    renderChat(data.mensajes);
+                } else {
+                    renderChat(data);
+                }
+            } catch (e) { console.log("Cargando chat..."); }
+        }
+
+        function renderChat(mensajes) {
+            const muro = document.getElementById('muro-mensajes');
+            muro.innerHTML = "";
+            mensajes.reverse().forEach(d => {
+                const s = document.createElement('div');
+                s.className = "sticker";
+                s.style.backgroundColor = d.Color || "#fff4ad";
+                s.style.transform = `rotate(${Math.random()*6-3}deg)`;
+                s.innerHTML = `<strong>${d.Nombre}:</strong><p>${d.Mensaje}</p>`;
+                muro.appendChild(s);
+            });
+        }
+
+        async function darLike(id, element) {
+            const icon = element.querySelector('.like-btn');
+            if(icon.classList.contains('active')) return;
+            icon.classList.add('active');
+            const countSpan = element.querySelector('.like-count');
+            countSpan.innerText = parseInt(countSpan.innerText) + 1;
+            fetch(`${SCRIPT_URL}?accion=darLike&idFoto=${id}`, { method: 'POST', mode: 'no-cors' });
+        }
+
+        async function cargarFotos() {
+            try {
+                const res = await fetch(`https://res.cloudinary.com/${cloudName}/image/list/${eventTag}.json?v=${Date.now()}`);
+                const data = await res.json();
+                const gal = document.getElementById('galeria');
+                gal.innerHTML = "";
+                document.getElementById('count-fotos').innerText = data.resources.length;
+                data.resources.forEach(img => {
+                    let uploader = img.context?.custom?.uploader || "Invitado";
+                    const id = img.public_id;
+                    const urlThumb = `https://res.cloudinary.com/${cloudName}/image/upload/w_400,c_fill/${id}.${img.format}`;
+                    const div = document.createElement('div');
+                    div.className = 'photo-item';
+                    div.innerHTML = `
+                        <img src="${urlThumb}" onclick="window.open('https://res.cloudinary.com/${cloudName}/image/upload/${id}.${img.format}')">
+                        <div class="tag">De: ${uploader}</div>
+                        <div class="photo-info" onclick="darLike('${id}', this)">
+                            <div class="like-btn">❤ <span class="like-count">0</span></div>
+                        </div>`;
+                    gal.appendChild(div);
+                });
+            } catch (e) { console.log("Cargando fotos..."); }
+        }
 
         const widget = cloudinary.createUploadWidget({
-            cloudName: cloudName, uploadPreset: "ALBUN TEST", tags: [eventTag],
+            cloudName: cloudName, uploadPreset: uploadPreset, tags: [eventTag],
+            clientAllowedFormats: ["png", "jpg", "jpeg"],
             prepareUploadParams: (cb, params) => {
                 const n = prompt("¿Tu nombre?") || "Invitado";
                 cb({ context: `uploader=${n}` });
             }
-        }, (err, res) => { if(res.event === "success") setTimeout(cargarTodo, 2000); });
+        }, (err, res) => { if(res.event === "success") setTimeout(cargarFotos, 2000); });
+
         document.getElementById("upload_widget").onclick = () => widget.open();
 
+        window.onload = () => { 
+            cargarChat(); 
+            cargarFotos(); 
+            setInterval(cargarChat, 30000); 
+        };
     </script>
 </body>
 </html>
