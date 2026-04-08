@@ -232,7 +232,9 @@
     </div>
 
     <script>
+        // PEGA TU URL AQUÍ ABAJO
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR3VsX40qx8CIl-lNZyJP88FpKoTgwvPVLVGVvnApxHsS3E16pDcI-Gz3rOaM_zeQ/exec";
+        
         const cloudName = "dkoaxjahe";
         const uploadPreset = "ALBUN TEST";
         const eventTag = "cumple_valentina_6";
@@ -259,7 +261,7 @@
             btn.innerText = "Enviando...";
             
             const data = new URLSearchParams();
-            data.append('accion', 'mensaje'); // Agregamos tipo de acción
+            data.append('accion', 'mensaje'); 
             data.append('Nombre', nom);
             data.append('Mensaje', msg);
             data.append('Color', col);
@@ -279,10 +281,10 @@
                 const muro = document.getElementById('muro-mensajes');
                 muro.innerHTML = "";
                 
-                let mensajes = Array.isArray(data) ? data : (data.mensajes || []);
+                let mensajes = data.mensajes || [];
                 document.getElementById('count-msgs').innerText = mensajes.length;
 
-                // Si tu Excel envía likes totales, actualízalos aquí
+                // Actualizar total de likes desde el Excel
                 if(data.totalLikes !== undefined) {
                     document.getElementById('count-likes').innerText = data.totalLikes;
                 }
@@ -295,7 +297,7 @@
                     s.innerHTML = `<strong>${d.Nombre}:</strong><p>${d.Mensaje}</p>`;
                     muro.appendChild(s);
                 });
-            } catch (e) { console.log("Cargando chat..."); }
+            } catch (e) { console.log("Cargando datos..."); }
         }
 
         async function darLike(id, element) {
@@ -311,7 +313,7 @@
             let totalGeneral = document.getElementById('count-likes');
             totalGeneral.innerText = parseInt(totalGeneral.innerText) + 1;
 
-            // ENVIAR COMO ACCION LIKE PARA QUE EL EXCEL NO CREE MENSAJE
+            // ENVIAR COMO ACCION LIKE
             const data = new URLSearchParams();
             data.append('accion', 'like');
             data.append('idFoto', id);
