@@ -62,7 +62,6 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.4); 
         }
 
-        /* BARRA DE ESTADÍSTICAS */
         .stats-bar {
             display: flex;
             justify-content: center;
@@ -134,7 +133,6 @@
             display: flex; justify-content: space-around; align-items: center;
         }
 
-        /* BOTÓN DE LIKE DISCRETO */
         .like-btn { 
             cursor: pointer; pointer-events: auto; 
             color: white; transition: 0.3s;
@@ -262,29 +260,39 @@
             try {
                 const res = await fetch(SCRIPT_URL);
                 const data = await res.json();
-                
-                // Actualizar contadores globales
-                document.getElementById('stat-mensajes').innerText = data.totalMensajes || 0;
-                document.getElementById('stat-likes').innerText = data.totalLikes || 0;
-                
-                // Mapear likes por ID de foto
-                likesData = {};
-                if(data.detalleLikes) data.detalleLikes.forEach(item => { likesData[item[0]] = item[1]; });
-
                 const muro = document.getElementById('muro-mensajes');
                 muro.innerHTML = "";
-                // Asumiendo que data.mensajes contiene la lista de stickers
-                if(data.mensajes){
-                    data.mensajes.reverse().forEach(d => {
-                        const s = document.createElement('div');
-                        s.className = "sticker";
-                        s.style.backgroundColor = d.Color || "#fff4ad";
-                        s.style.transform = `rotate(${Math.random()*6-3}deg)`;
-                        s.innerHTML = `<strong>${d.Nombre}:</strong><p>${d.Mensaje}</p>`;
-                        muro.appendChild(s);
-                    });
+
+                let mensajesAMostrar = [];
+
+                // Manejo de formatos de respuesta del Script de Google
+                if (Array.isArray(data)) {
+                    mensajesAMostrar = data;
+                } else {
+                    mensajesAMostrar = data.mensajes || [];
+                    document.getElementById('stat-mensajes').innerText = data.totalMensajes || mensajesAMostrar.length;
+                    document.getElementById('stat-likes').innerText = data.totalLikes || 0;
+                    
+                    likesData = {};
+                    if(data.detalleLikes) data.detalleLikes.forEach(item => { likesData[item[0]] = item[1]; });
                 }
-            } catch (e) { console.log("Cargando datos..."); }
+
+                mensajesAMostrar.slice().reverse().forEach(d => {
+                    const s = document.createElement('div');
+                    s.className = "sticker";
+                    s.style.backgroundColor = d.Color || "#fff4ad";
+                    s.style.transform = `rotate(${Math.random()*6-3}deg)`;
+                    s.innerHTML = `<strong>${d.Nombre}:</strong><p>${d.Mensaje}</p>`;
+                    muro.appendChild(s);
+                });
+
+                // Actualizar likes en fotos ya cargadas
+                document.querySelectorAll('.like-btn').forEach(btn => {
+                    const id = btn.getAttribute('data-id');
+                    if(likesData[id]) btn.innerHTML = `❤ ${likesData[id]}`;
+                });
+
+            } catch (e) { console.log("Cargando chat..."); }
         }
 
         async function cargarFotos() {
@@ -310,7 +318,7 @@
                         <img src="${urlThumb}" onclick="window.open('${urlFull}')">
                         <div class="tag">
                             <span>De: ${uploader}</span>
-                            <span class="like-btn ${claseActiva}" onclick="enviarLike('${img.public_id}', this)">❤ ${cantLikes}</span>
+                            <span class="like-btn ${claseActiva}" data-id="${img.public_id}" onclick="enviarLike('${img.public_id}', this)">❤ ${cantLikes}</span>
                         </div>`;
                     gal.appendChild(div);
                 });
@@ -328,12 +336,11 @@
             
             try {
                 fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
-                // Actualización visual inmediata
                 let num = parseInt(elemento.innerText.replace('❤ ', '')) + 1;
                 elemento.innerHTML = `❤ ${num}`;
                 let totalUp = document.getElementById('stat-likes');
                 totalUp.innerText = parseInt(totalUp.innerText) + 1;
-            } catch (e) { console.log("Error like"); }
+            } catch (e) { console.log("Error al dar like"); }
         }
 
         const widget = cloudinary.createUploadWidget({
