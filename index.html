@@ -62,6 +62,7 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.4); 
         }
 
+        /* ESTILO DE CONTADORES */
         .contadores {
             display: flex;
             justify-content: center;
@@ -123,6 +124,7 @@
             font-size: 0.8rem; position: relative; color: #333;
         }
 
+        /* GALERÍA EN 2 COLUMNAS */
         .gallery-grid {
             display: grid; 
             grid-template-columns: repeat(2, 1fr);
@@ -312,8 +314,8 @@
             cloudName: cloudName, 
             uploadPreset: uploadPreset, 
             tags: [eventTag],
-            // AGREGAMOS LA OPCIÓN DE CÁMARA AQUÍ
-            sources: ["local", "camera", "url", "facebook", "instagram"],
+            // LISTA COMPLETA: Incluye archivos locales, cámara y servicios en la nube
+            sources: ["local", "camera", "google_drive", "dropbox", "facebook", "instagram", "url"],
             clientAllowedFormats: ["png", "jpg", "jpeg"],
             prepareUploadParams: (cb, params) => {
                 const n = prompt("¿Tu nombre?") || "Invitado";
