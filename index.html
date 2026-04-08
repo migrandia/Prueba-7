@@ -116,6 +116,7 @@
             width: 130px; min-height: 130px; padding: 12px;
             text-align: left; box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
             font-size: 0.8rem; position: relative; color: #333;
+            border-radius: 2px;
         }
 
         .gallery-grid {
@@ -158,7 +159,7 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
 
     <div class="header-album">
         <div class="foto-portada">
@@ -177,7 +178,7 @@
     <div id="admin-panel">
         <h3 style="margin-top:0;">Panel Administrativo</h3>
         <button class="btn-admin" onclick="location.reload()">🔄 Actualizar</button>
-        <p style="font-size:10px; color:#ccc;">Usa el Excel para gestionar mensajes</p>
+        <p style="font-size:10px; color:#ccc;">Gestiona desde Google Sheets</p>
     </div>
 
     <div class="chat-container">
@@ -201,7 +202,7 @@
 
     <div class="thanks-section">
         <p class="thanks-text">¡Gracias por venir!</p>
-        <p class="thanks-subtext">Mi fiesta no hubiera sido igual sin tu compañía. Gracias por festejar conmigo y guardar estos bellos recuerdos.</p>
+        <p class="thanks-subtext">Mi fiesta no hubiera sido igual sin tu compañía.</p>
         <div class="footer-brand">
             CREADO POR <a href="https://migrandia.mx" target="_blank">MIGRANDIA.MX</a>
         </div>
@@ -222,12 +223,6 @@
 
         function setCol(c) { col = c; document.getElementById('caja').style.backgroundColor = c; }
 
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false; 
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; 
-        };
-
         function detectarTripleClic() {
             clickCount++;
             if (clickCount === 3) {
@@ -241,19 +236,28 @@
         async function enviar() {
             const nom = document.getElementById('n').value;
             const msg = document.getElementById('m').value;
-            if(!nom || !msg) return alert("Faltan datos");
+            if(!nom || !msg) return alert("Por favor escribe tu nombre y un mensaje.");
+            
             const btn = document.querySelector('.btn-enviar');
             btn.innerText = "Enviando...";
+            btn.disabled = true;
+
             const data = new URLSearchParams();
             data.append('Nombre', nom);
             data.append('Mensaje', msg);
             data.append('Color', col);
+
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
                 document.getElementById('m').value = "";
                 btn.innerText = "ENVIAR MENSAJE";
+                btn.disabled = false;
                 setTimeout(cargarChat, 2000); 
-            } catch (e) { alert("Error al enviar"); btn.innerText = "ENVIAR MENSAJE"; }
+            } catch (e) { 
+                alert("Error al enviar. Intenta de nuevo."); 
+                btn.innerText = "ENVIAR MENSAJE";
+                btn.disabled = false;
+            }
         }
 
         async function cargarChat() {
@@ -261,23 +265,24 @@
                 const res = await fetch(SCRIPT_URL);
                 const data = await res.json();
                 const muro = document.getElementById('muro-mensajes');
-                muro.innerHTML = "";
-
-                let mensajesAMostrar = [];
-
-                // Manejo de formatos de respuesta del Script de Google
-                if (Array.isArray(data)) {
-                    mensajesAMostrar = data;
-                } else {
-                    mensajesAMostrar = data.mensajes || [];
-                    document.getElementById('stat-mensajes').innerText = data.totalMensajes || mensajesAMostrar.length;
+                
+                let mensajes = [];
+                
+                // --- CORRECCIÓN CRÍTICA AQUÍ ---
+                // Si el JSON viene como objeto {mensajes: [...]}, extraemos la lista.
+                // Si viene como lista directa [...], la usamos.
+                if (data.mensajes) {
+                    mensajes = data.mensajes;
+                    document.getElementById('stat-mensajes').innerText = data.totalMensajes || mensajes.length;
                     document.getElementById('stat-likes').innerText = data.totalLikes || 0;
-                    
-                    likesData = {};
                     if(data.detalleLikes) data.detalleLikes.forEach(item => { likesData[item[0]] = item[1]; });
+                } else if (Array.isArray(data)) {
+                    mensajes = data;
+                    document.getElementById('stat-mensajes').innerText = mensajes.length;
                 }
 
-                mensajesAMostrar.slice().reverse().forEach(d => {
+                muro.innerHTML = "";
+                mensajes.slice().reverse().forEach(d => {
                     const s = document.createElement('div');
                     s.className = "sticker";
                     s.style.backgroundColor = d.Color || "#fff4ad";
@@ -286,13 +291,13 @@
                     muro.appendChild(s);
                 });
 
-                // Actualizar likes en fotos ya cargadas
+                // Actualizar contadores de likes en fotos si existen
                 document.querySelectorAll('.like-btn').forEach(btn => {
                     const id = btn.getAttribute('data-id');
                     if(likesData[id]) btn.innerHTML = `❤ ${likesData[id]}`;
                 });
 
-            } catch (e) { console.log("Cargando chat..."); }
+            } catch (e) { console.error("Error cargando mensajes:", e); }
         }
 
         async function cargarFotos() {
@@ -339,8 +344,8 @@
                 let num = parseInt(elemento.innerText.replace('❤ ', '')) + 1;
                 elemento.innerHTML = `❤ ${num}`;
                 let totalUp = document.getElementById('stat-likes');
-                totalUp.innerText = parseInt(totalUp.innerText) + 1;
-            } catch (e) { console.log("Error al dar like"); }
+                totalUp.innerText = parseInt(totalUp.innerText || 0) + 1;
+            } catch (e) { console.log("Error like"); }
         }
 
         const widget = cloudinary.createUploadWidget({
