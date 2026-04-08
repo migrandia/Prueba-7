@@ -62,7 +62,6 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.4); 
         }
 
-        /* BARRA DE ESTADÍSTICAS */
         .stats-bar {
             display: flex; justify-content: space-around;
             background: white; padding: 10px; margin: 10px;
@@ -129,7 +128,6 @@
         .photo-container { aspect-ratio: 1/1; overflow: hidden; position: relative; }
         .photo-container img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
         
-        /* CORAZONES */
         .photo-footer {
             display: flex; justify-content: space-between; align-items: center;
             padding: 8px 10px; background: white;
@@ -259,10 +257,13 @@
             if(!nom || !msg) return alert("Faltan datos");
             const btn = document.querySelector('.btn-enviar');
             btn.innerText = "Enviando...";
+            
             const data = new URLSearchParams();
+            data.append('accion', 'mensaje'); // Agregamos tipo de acción
             data.append('Nombre', nom);
             data.append('Mensaje', msg);
             data.append('Color', col);
+            
             try {
                 await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
                 document.getElementById('m').value = "";
@@ -278,13 +279,15 @@
                 const muro = document.getElementById('muro-mensajes');
                 muro.innerHTML = "";
                 
-                let mensajes = Array.isArray(data) ? data : data.mensajes;
-                let totalDeseos = mensajes.length;
-                
-                // Actualizar el contador de deseos en la barra superior
-                document.getElementById('count-msgs').innerText = totalDeseos;
+                let mensajes = Array.isArray(data) ? data : (data.mensajes || []);
+                document.getElementById('count-msgs').innerText = mensajes.length;
 
-                mensajes.reverse().forEach(d => {
+                // Si tu Excel envía likes totales, actualízalos aquí
+                if(data.totalLikes !== undefined) {
+                    document.getElementById('count-likes').innerText = data.totalLikes;
+                }
+
+                mensajes.slice().reverse().forEach(d => {
                     const s = document.createElement('div');
                     s.className = "sticker";
                     s.style.backgroundColor = d.Color || "#fff4ad";
@@ -303,14 +306,17 @@
             heart.innerText = "❤";
             
             const countSpan = element.querySelector('.num-likes-foto');
-            let currentLikes = parseInt(countSpan.innerText);
-            countSpan.innerText = currentLikes + 1;
+            countSpan.innerText = parseInt(countSpan.innerText) + 1;
 
-            // Actualizar total general arriba
             let totalGeneral = document.getElementById('count-likes');
             totalGeneral.innerText = parseInt(totalGeneral.innerText) + 1;
 
-            fetch(`${SCRIPT_URL}?accion=darLike&idFoto=${id}`, { method: 'POST', mode: 'no-cors' });
+            // ENVIAR COMO ACCION LIKE PARA QUE EL EXCEL NO CREE MENSAJE
+            const data = new URLSearchParams();
+            data.append('accion', 'like');
+            data.append('idFoto', id);
+
+            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
         }
 
         async function cargarFotos() {
